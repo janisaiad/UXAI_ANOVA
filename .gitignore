@@ -18,3 +18,5 @@ explore_*
 .env
 .venv/
 .tach/
+uxai_anova.egg-info/
+treeshap.cpython-311-x86_64-linux-gnu.so
