@@ -7,13 +7,6 @@ exclude = [
 source_roots = [
     ".",
 ]
-
-[[modules]]
-path = "<root>"
-depends_on = [
-    { path = "src" },
+modules = [
+    { path = "src", depends_on = [] },
 ]
-
-[[modules]]
-path = "src"
-depends_on = []
