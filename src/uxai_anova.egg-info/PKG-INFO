@@ -1,0 +1,95 @@
+Metadata-Version: 2.1
+Name: uxai-anova
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: ipykernel>=6.29.5
+Requires-Dist: ipywidgets>=8.1.5
+Requires-Dist: matplotlib>=3.9.2
+Requires-Dist: nbformat>=5.10.4
+Requires-Dist: numba>=0.60.0
+Requires-Dist: numpy==1.26.4
+Requires-Dist: pandas>=2.2.3
+Requires-Dist: pytest>=8.3.3
+Requires-Dist: ruff>=0.7.1
+Requires-Dist: scikit-learn==1.2.0
+Requires-Dist: setuptools>=75.3.0
+Requires-Dist: shap>=0.46.0
+Requires-Dist: simple-parsing>=0.1.6
+Requires-Dist: tach>=0.14.1
+Requires-Dist: tqdm>=4.66.6
+Requires-Dist: wandb>=0.18.5
+Requires-Dist: xlrd>=2.0.1
+
+# Tackling the XAI Disagreement Problem with Regional Explanations
+
+> ⚠️  **Warning** This repository is meant for reproducability of the original paper and is no longer being maintained.
+> For an implementation of FD-Trees that is being actively maintained, we refer to the
+> [PyFD](https://github.com/gablabc/PyFD) package.
+
+## Description
+
+The goal of this repository is to discover **regions** of the input space with reduced
+feature interactions. These regions are idenfied as the leaves of a binary decision
+tree that is trained to minimize feature interactions As a result, post-hoc explainers
+such as PDP and SHAP increase in agreement when restricted to each region.
+
+![logo](experiments/Images/results.png)
+
+## Installation
+
+To create the conda environment run
+
+```sh
+conda env create --file environment.yml
+conda activate FDTrees
+```
+
+The code relies on a C++ implementation of the Interventional TreeSHAP algorithm to
+efficiently compute Shapley Values, Shapley Taylor Indices, and the **H** tensor from the paper.
+To compile the C++ code, run
+
+```sh
+python3 setup.py build
+```
+
+If everything worked well, you should see a `.so` file in a new `build` directory.
+
+## Experiments
+
+All experiments are done in the `experiments` directory
+
+```sh
+cd experiments
+```
+
+### Toy Experiments
+
+The script that start with `0_*` are toy experiments meant to illustrate how FD-Trees work.
+These script can be run directly without providing arguments.
+
+- `0_0_motivation.py` The first toy example in the paper (the piece-wise linear function 
+with two regions)
+- `0_1_illustration.py` The code to reproduce Figure 2.
+- `0_2_interactions.py` A 2D example where we visualize interactions.
+- `0_3_correlations.py` A simple example where we investigate correlated features.
+- `0_4_gadget_pdp.py` Toy example to convey the intuition behind GADGET-PDP.
+
+### Real Datasets
+
+The remaining script are numbered `1_*` (model training), `2_*` (interaction detection),
+`3_*` (regional explanations computations), and `4_*` (plot results).
+The reproduce our results, run the following bash scripts
+
+**Model Training** ``./script_train.sh``
+
+**Regional Explanations** ``./script_explain.sh <seed>`` with `<seed>` taking values 0, 1, 2, 3, 4.
+
+**Stability of the Partitions** ``./script_stability.sh``
+
+Finally, the results of the paper are plotted via
+
+- `4_0_plot_california.py` Plot the figures from **Section D.3.4**.
+- `4_1_plot_disagreements.py` Plot Figure 3 and Table 2 showing the explanation disagreements.
+- `4_2_partition_stability.py` Plot the Figures in **Section D.1** regarding the stability of the partitions w.r.t the subsample size.

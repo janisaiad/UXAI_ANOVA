@@ -12,7 +12,7 @@
 #include <stdexcept>
 #include "progressbar.hpp"
 #include "utils.hpp"
-
+#include <tuple> // for tuple main error when building
 using namespace std;
 
 

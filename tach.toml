@@ -1,0 +1,19 @@
+exclude = [
+    ".*__pycache__",
+    ".*egg-info",
+    "docs",
+    "tests",
+]
+source_roots = [
+    ".",
+]
+
+[[modules]]
+path = "<root>"
+depends_on = [
+    { path = "src" },
+]
+
+[[modules]]
+path = "src"
+depends_on = []
